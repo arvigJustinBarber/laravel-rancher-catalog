@@ -1,44 +1,40 @@
-web:
-  scale: 4
-  upgrade_strategy:
-      start_first: true
-  health_check:
-      port: 80
-      interval: 30000
-      unhealthy_threshold: 4
-      response_timeout: 20000
-      request_line: GET / HTTP/1.0
-      healthy_threshold: 2
+.catalog:
+  name: "Drupal"
+  version: "v0.1"
+  description: "Drupal is an open source CMS powering millions of websites and applications."
+  uuid: Drupal-0
+  minimum_rancher_version: v0.51.0
+  questions:
+    - variable: public_port
+      description: "public port to access the drupal site"
+      label: "Public Port"
+      required: true
+      default: "80"
+      type: "int"
 
-web-balancer:
-  scale: 2
-  load_balancer_config:
-    name: web-balancer config
+    - variable: database
+      description: "database name"
+      label: "MYSQL_DATABASE"
+      required: true
+      type: "string"
 
+    - variable: mysql_root_password
+      description: "password for root user"
+      label: "MYSQL_ROOT_PASSWORD"
+      required: true
+      type: "string"
 
-redis:
-  scale: 1
-  health_check:
-      port: 6379
-      interval: 2000
-      unhealthy_threshold: 10
-      response_timeout: 2000
-      healthy_threshold: 2
+    - variable: mysql_newusr
+      description: "new user name"
+      label: "MYSQL_USER"
+      required: false
+      type: "string"
 
-beanstalk:
-  scale: 1
-  health_check:
-      port: 11300
-      interval: 2000
-      unhealthy_threshold: 10
-      response_timeout: 2000
-      healthy_threshold: 2
+    - variable: mysql_newusr_password
+      description: "new user password"
+      label: "MYSQL_USER_PASSWORD"
+      required: false
+      type: "string"
 
-postgres:
-  scale: 1
-  health_check:
-      port: 5432
-      interval: 2000
-      unhealthy_threshold: 10
-      response_timeout: 2000
-      healthy_threshold: 2
+drupal:
+  retain_ip: true
